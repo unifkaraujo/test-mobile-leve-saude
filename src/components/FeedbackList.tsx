@@ -12,6 +12,10 @@ interface Feedback {
   criadoEm: Date;
 }
 
+function Stars({ count }: { count: number }) {
+  return <Text>{Array.from({ length: count }, () => '⭐').join('')}</Text>;
+}
+
 export default function FeedbackList() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
@@ -47,8 +51,12 @@ export default function FeedbackList() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.nota}>Nota: {item.nota}⭐</Text>
+            <View style={styles.starsRow}>
+              <Stars count={item.nota} />
+            </View>
+
             <Text style={styles.comentario}>{item.comentario}</Text>
+
             <Text style={styles.data}>
               {format(item.criadoEm, 'dd/MM/yyyy')}
             </Text>
@@ -60,15 +68,45 @@ export default function FeedbackList() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 16 },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F3F4F6',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 20,
+    color: '#111827',
+  },
   card: {
-    backgroundColor: '#f5f5f5',
-    padding: 14,
-    borderRadius: 8,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 12,
+    marginBottom: 14,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 4,
+    borderLeftWidth: 2,
+    borderLeftColor: '#374151',
+  },
+  starsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 10,
   },
-  nota: { fontWeight: '600', marginBottom: 4 },
-  comentario: { marginBottom: 6 },
-  data: { fontSize: 12, color: '#555' },
+  comentario: {
+    fontSize: 16,
+    lineHeight: 22,
+    color: '#374151',
+    marginBottom: 12,
+    fontWeight: '500',
+  },
+  data: {
+    fontSize: 13,
+    color: '#9CA3AF',
+    fontStyle: 'italic',
+  },
 });

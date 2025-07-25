@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import FeedbackList from '../components/FeedbackList';
@@ -15,23 +22,94 @@ export default function Home() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Bem-vindo(a), {user?.displayName}</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#1F2937" />
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Dashboard</Text>
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+            <Text style={styles.logoutText}>Sair</Text>
+          </TouchableOpacity>
+        </View>
 
-      <FeedbackList />
+        <View style={styles.main}>
+          <Text style={styles.welcome}>Bem-vindo(a), {user?.displayName}</Text>
+          <FeedbackList />
+        </View>
 
-      <Button
-        title="Enviar Feedback"
-        onPress={() => navigation.navigate('EnviarFeedback')}
-        color="#2563eb"
-      />
-
-      <Button title="Sair" onPress={handleLogout} color="#dc2626" />
-    </View>
+        <TouchableOpacity
+          style={styles.fab}
+          onPress={() => navigation.navigate('EnviarFeedback')}
+        >
+          <Text style={styles.fabIcon}>＋</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  welcome: { fontSize: 18, fontWeight: '600', marginBottom: 20 },
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#F3F4F6',
+  },
+  header: {
+    backgroundColor: '#1F2937',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  logoutButton: {
+    backgroundColor: '#DC2626',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  logoutText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  main: {
+    flex: 1,
+    padding: 20,
+  },
+  welcome: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 16,
+    color: '#111827',
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#1F2937',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  fabIcon: {
+    color: '#fff',
+    fontSize: 28,
+    lineHeight: 32,
+    marginTop: -2,
+  },
 });

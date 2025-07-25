@@ -52,48 +52,50 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Criar conta</Text>
+      <View style={styles.form}>
+        <Text style={styles.titulo}>Criar conta</Text>
 
-      <TextInput
-        placeholder="Nome"
-        placeholderTextColor="#888"
-        style={styles.input}
-        value={nome}
-        onChangeText={setNome}
-      />
+        <TextInput
+          placeholder="Nome"
+          placeholderTextColor="#888"
+          style={styles.input}
+          value={nome}
+          onChangeText={setNome}
+        />
 
-      <TextInput
-        placeholder="E-mail"
-        placeholderTextColor="#888"
-        style={styles.input}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
+        <TextInput
+          placeholder="E-mail"
+          placeholderTextColor="#888"
+          style={styles.input}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
 
-      <TextInput
-        placeholder="Senha"
-        placeholderTextColor="#888"
-        style={styles.input}
-        secureTextEntry
-        value={senha}
-        onChangeText={setSenha}
-      />
+        <TextInput
+          placeholder="Senha"
+          placeholderTextColor="#888"
+          style={styles.input}
+          secureTextEntry
+          value={senha}
+          onChangeText={setSenha}
+        />
 
-      <TouchableOpacity
-        style={[styles.botao, carregando && { opacity: 0.7 }]}
-        onPress={handleCadastro}
-        disabled={carregando}
-      >
-        <Text style={styles.botaoTexto}>
-          {carregando ? 'Cadastrando...' : 'Cadastrar'}
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.botao, carregando && styles.botaoDesabilitado]}
+          onPress={handleCadastro}
+          disabled={carregando}
+        >
+          <Text style={styles.botaoTexto}>
+            {carregando ? 'Cadastrando...' : 'Cadastrar'}
+          </Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.link}>Já tem conta? Entrar</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.link}>Já tem conta? Entrar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -101,9 +103,22 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
-    padding: 20,
+    backgroundColor: '#f8fafc',
     justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  form: {
+    backgroundColor: '#fff',
+    width: '100%',
+    maxWidth: 400,
+    padding: 24,
+    borderRadius: 8,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   titulo: {
     fontSize: 24,
@@ -122,11 +137,16 @@ const styles = StyleSheet.create({
     color: '#111827',
   },
   botao: {
-    backgroundColor: '#2563eb',
-    padding: 14,
-    borderRadius: 6,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
+  },
+  botaoDesabilitado: {
+    opacity: 0.7,
   },
   botaoTexto: {
     color: '#fff',
@@ -135,5 +155,7 @@ const styles = StyleSheet.create({
   link: {
     color: '#2563eb',
     textAlign: 'center',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
 });
