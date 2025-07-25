@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../lib/firebase';
-import { useNavigation } from '@react-navigation/native';
+import { useAppNavigation } from '../hooks/useAppNavigation';
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [carregando, setCarregando] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   const handleCadastro = async () => {
     if (!email || !senha) {
@@ -25,8 +25,7 @@ export default function RegisterScreen() {
     setCarregando(true);
     try {
       await createUserWithEmailAndPassword(auth, email, senha);
-      Alert.alert('Cadastro realizado com sucesso!');
-      navigation.goBack();
+      navigation.navigate('Home');
     } catch (error: any) {
       Alert.alert('Erro ao cadastrar', error.message);
     } finally {

@@ -13,7 +13,7 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, senha);
-      Alert.alert('Login feito com sucesso!');
+      navigation.navigate('Home');
     } catch (error: any) {
       Alert.alert('Erro ao entrar', error.message);
     }
