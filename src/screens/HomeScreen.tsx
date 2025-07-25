@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Bem-vindo(a), {user?.email}</Text>
+      <Text style={styles.welcome}>Bem-vindo(a), {user?.displayName}</Text>
 
       <FeedbackList />
 

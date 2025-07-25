@@ -7,24 +7,41 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { db, auth } from '../lib/firebase';
 import { useAppNavigation } from '../hooks/useAppNavigation';
+import { setDoc, doc } from 'firebase/firestore';
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [nome, setNome] = useState('');
   const [carregando, setCarregando] = useState(false);
   const navigation = useAppNavigation();
 
   const handleCadastro = async () => {
-    if (!email || !senha) {
+    if (!nome || !email || !senha) {
       return Alert.alert('Preencha todos os campos');
     }
 
     setCarregando(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, senha);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        senha,
+      );
+
+      await updateProfile(userCredential.user, {
+        displayName: nome,
+      });
+
+      await setDoc(doc(db, 'users', userCredential.user.uid), {
+        nome,
+        email,
+        criadoEm: new Date(),
+      });
+
       navigation.navigate('Home');
     } catch (error: any) {
       Alert.alert('Erro ao cadastrar', error.message);
@@ -36,6 +53,14 @@ export default function RegisterScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Criar conta</Text>
+
+      <TextInput
+        placeholder="Nome"
+        placeholderTextColor="#888"
+        style={styles.input}
+        value={nome}
+        onChangeText={setNome}
+      />
 
       <TextInput
         placeholder="E-mail"
