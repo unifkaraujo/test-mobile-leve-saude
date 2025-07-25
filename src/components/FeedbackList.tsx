@@ -22,11 +22,11 @@ export default function FeedbackList() {
 
       const q = query(
         collection(db, 'feedbacks'),
-        where('usuarioId', '==', user.uid)
+        where('usuarioId', '==', user.uid),
       );
 
       const snapshot = await getDocs(q);
-      const lista: Feedback[] = snapshot.docs.map(doc => ({
+      const lista: Feedback[] = snapshot.docs.map((doc) => ({
         id: doc.id,
         comentario: doc.data().comentario,
         nota: doc.data().nota,
@@ -49,7 +49,9 @@ export default function FeedbackList() {
           <View style={styles.card}>
             <Text style={styles.nota}>Nota: {item.nota}⭐</Text>
             <Text style={styles.comentario}>{item.comentario}</Text>
-            <Text style={styles.data}>{format(item.criadoEm, 'dd/MM/yyyy')}</Text>
+            <Text style={styles.data}>
+              {format(item.criadoEm, 'dd/MM/yyyy')}
+            </Text>
           </View>
         )}
       />

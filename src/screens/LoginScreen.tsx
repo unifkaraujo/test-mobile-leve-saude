@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Text,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { useAppNavigation } from '../hooks/useAppNavigation';
@@ -45,7 +53,6 @@ export default function LoginScreen() {
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.link}>Criar nova conta</Text>
       </TouchableOpacity>
-
     </View>
   );
 }

@@ -26,7 +26,6 @@ export default function Home() {
         color="#2563eb"
       />
 
-
       <Button title="Sair" onPress={handleLogout} color="#dc2626" />
     </View>
   );
