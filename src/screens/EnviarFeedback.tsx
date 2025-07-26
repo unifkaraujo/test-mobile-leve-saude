@@ -29,6 +29,11 @@ export default function EnviarFeedback() {
       return;
     }
 
+    if (comentario.trim().length < 10) {
+      Alert.alert('Erro', 'O comentário deve ter no mínimo 10 caracteres.');
+      return;
+    }
+
     const numeroNota = Number(nota);
 
     if (isNaN(numeroNota) || numeroNota < 1 || numeroNota > 5) {
