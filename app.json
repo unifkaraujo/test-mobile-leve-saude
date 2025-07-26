@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ad59d34a-153c-476e-8109-42715eea768f"
+      }
+    },
+    "owner": "kaiquescpc"
   }
 }
