@@ -15,7 +15,7 @@ Aplicativo feito em React Native com objetivo de permitir que usuários enviem f
 ## 🚀 Instalação
 
 ```bash
-git clone https://github.com/unifkaraujo/test-web-leve-saude.git
+git clone https://github.com/unifkaraujo/test-mobile-leve-saude.git
 cd test-mobile-leve-saude
 npm install
 ```
