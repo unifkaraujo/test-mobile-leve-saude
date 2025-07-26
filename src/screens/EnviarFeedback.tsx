@@ -6,13 +6,13 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
   ActivityIndicator,
 } from 'react-native';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db, auth } from '../lib/firebase';
 import { useAppNavigation } from '../hooks/useAppNavigation';
+import { HeaderPaginas } from '../components/Header';
+import Layout from '../components/Layout';
 
 export default function EnviarFeedback() {
   const [comentario, setComentario] = useState('');
@@ -62,19 +62,9 @@ export default function EnviarFeedback() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor="#1F2937" />
-
+    <Layout>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Text style={styles.backText}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Enviar Feedback</Text>
-        </View>
+        <HeaderPaginas />
 
         <View style={styles.main}>
           <Text style={styles.label}>Comentário</Text>
@@ -120,7 +110,7 @@ export default function EnviarFeedback() {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </Layout>
   );
 }
 
@@ -132,27 +122,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F3F4F6',
-  },
-  header: {
-    backgroundColor: '#1F2937',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  backButton: {
-    width: 40,
-    marginTop: -5,
-  },
-  backText: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
   main: {
     flex: 1,

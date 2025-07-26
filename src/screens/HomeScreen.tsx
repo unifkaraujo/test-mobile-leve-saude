@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
-import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import FeedbackList from '../components/FeedbackList';
 import { useAppNavigation } from '../hooks/useAppNavigation';
+import { HeaderHome } from '../components/Header';
+import Layout from '../components/Layout';
+import Loading from '../components/Loading';
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
@@ -28,29 +24,13 @@ export default function Home() {
   }, []);
 
   if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Carregando usuário...</Text>
-      </View>
-    );
+    return <Loading />;
   }
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigation.replace('Login');
-  };
-
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor="#1F2937" />
+    <Layout>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Dashboard</Text>
-          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-            <Text style={styles.logoutText}>Sair</Text>
-          </TouchableOpacity>
-        </View>
-
+        <HeaderHome />
         <View style={styles.main}>
           <Text style={styles.welcome}>Bem-vindo(a), {user?.displayName}</Text>
           <FeedbackList />
@@ -63,7 +43,7 @@ export default function Home() {
           <Text style={styles.fabIcon}>＋</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </Layout>
   );
 }
 
@@ -75,29 +55,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F3F4F6',
-  },
-  header: {
-    backgroundColor: '#1F2937',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  logoutButton: {
-    backgroundColor: '#DC2626',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 4,
-  },
-  logoutText: {
-    color: '#fff',
-    fontWeight: 'bold',
   },
   main: {
     flex: 1,
