@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,14 +7,33 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import FeedbackList from '../components/FeedbackList';
 import { useAppNavigation } from '../hooks/useAppNavigation';
 
 export default function Home() {
-  const user = auth.currentUser;
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
   const navigation = useAppNavigation();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Carregando usuário...</Text>
+      </View>
+    );
+  }
 
   const handleLogout = async () => {
     await signOut(auth);

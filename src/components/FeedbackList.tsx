@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { auth } from '../lib/firebase';
@@ -18,6 +24,7 @@ function Stars({ count }: { count: number }) {
 
 export default function FeedbackList() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFeedbacks = async () => {
@@ -38,6 +45,7 @@ export default function FeedbackList() {
       }));
 
       setFeedbacks(lista);
+      setLoading(false);
     };
 
     fetchFeedbacks();
@@ -46,23 +54,32 @@ export default function FeedbackList() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Seus Feedbacks</Text>
-      <FlatList
-        data={feedbacks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <View style={styles.starsRow}>
-              <Stars count={item.nota} />
+
+      {loading ? (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+      ) : (
+        <FlatList
+          data={feedbacks}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <View style={styles.starsRow}>
+                <Stars count={item.nota} />
+              </View>
+
+              <Text style={styles.comentario}>{item.comentario}</Text>
+
+              <Text style={styles.data}>
+                {format(item.criadoEm, 'dd/MM/yyyy')}
+              </Text>
             </View>
-
-            <Text style={styles.comentario}>{item.comentario}</Text>
-
-            <Text style={styles.data}>
-              {format(item.criadoEm, 'dd/MM/yyyy')}
-            </Text>
-          </View>
-        )}
-      />
+          )}
+        />
+      )}
     </View>
   );
 }
