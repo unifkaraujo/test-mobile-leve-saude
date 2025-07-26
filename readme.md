@@ -27,7 +27,11 @@ npx expo start --dev-client
 ```
 
 É necessário ter o app com o build de desenvolvimento instalado:
-[🔗 Baixar APK (modo desenvolvimento)](https://expo.dev/accounts/kaiquescpc/projects/test-mobile-leve-saude/builds/48a62fc1-0e1d-4fed-a6a4-84d675812d37)
+🔗 [Baixar APK (modo desenvolvimento)](https://expo.dev/accounts/kaiquescpc/projects/test-mobile-leve-saude/builds/48a62fc1-0e1d-4fed-a6a4-84d675812d37)
+
+**Observação importante:**
+
+Na primeira vez que executar o app em modo desenvolvimento, pode ser necessário escanear o QR code com o Expo Go para que a conexão com o servidor seja estabelecida. Após isso, o app instalado via build de desenvolvimento funcionará normalmente sem precisar do QR code.
 
 ## 🧪 Como testar
 
