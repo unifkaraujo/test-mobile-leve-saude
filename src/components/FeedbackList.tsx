@@ -74,7 +74,7 @@ export default function FeedbackList() {
               <Text style={styles.comentario}>{item.comentario}</Text>
 
               <Text style={styles.data}>
-                {format(item.criadoEm, 'dd/MM/yyyy')}
+                {format(new Date(item.criadoEm), 'dd/MM/yyyy, HH:mm:ss')}
               </Text>
             </View>
           )}
