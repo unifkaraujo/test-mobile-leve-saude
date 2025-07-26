@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import FeedbackList from '../components/FeedbackList';
@@ -7,6 +7,7 @@ import { useAppNavigation } from '../hooks/useAppNavigation';
 import { HeaderHome } from '../components/Header';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
+import FabButton from '../components/FabButton';
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
@@ -36,12 +37,7 @@ export default function Home() {
           <FeedbackList />
         </View>
 
-        <TouchableOpacity
-          style={styles.fab}
-          onPress={() => navigation.navigate('EnviarFeedback')}
-        >
-          <Text style={styles.fabIcon}>＋</Text>
-        </TouchableOpacity>
+        <FabButton onPress={() => navigation.navigate('EnviarFeedback')} />
       </View>
     </Layout>
   );
@@ -65,27 +61,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 16,
     color: '#111827',
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#1F2937',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-  },
-  fabIcon: {
-    color: '#fff',
-    fontSize: 28,
-    lineHeight: 32,
-    marginTop: -2,
   },
 });

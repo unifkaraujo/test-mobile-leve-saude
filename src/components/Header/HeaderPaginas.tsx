@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAppNavigation } from '../../hooks/useAppNavigation';
 
 export default function HeaderPaginas() {
@@ -10,7 +11,7 @@ export default function HeaderPaginas() {
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
-        <Text style={styles.backText}>←</Text>
+        <Icon name="arrow-left" size={24} color="#fff" />
       </TouchableOpacity>
       <Text style={styles.headerTitle}>Enviar Feedback</Text>
     </View>
@@ -21,22 +22,21 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#1F2937',
     paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
   backButton: {
-    width: 40,
-    marginTop: -5,
-  },
-  backText: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
+    marginRight: 16,
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerTitle: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    flex: 1,
   },
 });

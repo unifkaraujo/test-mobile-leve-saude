@@ -11,6 +11,7 @@ import {
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { useAppNavigation } from '../hooks/useAppNavigation';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -36,22 +37,40 @@ export default function LoginScreen() {
       <View style={styles.main}>
         <Text style={styles.title}>Entrar</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="email"
+            size={20}
+            color="#9ca3af"
+            style={styles.icon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="E-mail"
+            placeholderTextColor="#9ca3af"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
+          />
+        </View>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Senha"
-          value={senha}
-          onChangeText={setSenha}
-          secureTextEntry
-        />
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="lock"
+            size={20}
+            color="#9ca3af"
+            style={styles.icon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            placeholderTextColor="#9ca3af"
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry
+          />
+        </View>
 
         <TouchableOpacity
           style={[styles.button, loading && styles.buttonDisabled]}
@@ -90,31 +109,41 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    gap: 16,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 32,
+    marginBottom: 16,
     textAlign: 'center',
     color: '#1a1a1a',
   },
-  input: {
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     height: 48,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#d1d5db',
     borderRadius: 8,
     paddingHorizontal: 12,
-    marginBottom: 16,
     backgroundColor: '#fff',
+  },
+  icon: {
+    marginRight: 8,
+  },
+  input: {
+    flex: 1,
+    height: '100%',
+    color: '#1a1a1a',
+    fontSize: 16,
   },
   button: {
     backgroundColor: '#1a1a1a',
     borderRadius: 8,
     paddingVertical: 12,
-    paddingHorizontal: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 16,
+    marginTop: 8,
   },
   buttonDisabled: {
     opacity: 0.5,
@@ -129,10 +158,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  buttonIcon: {
+    marginLeft: 8,
+  },
+  linkContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   link: {
     color: '#646cff',
     textAlign: 'center',
-    textDecorationLine: 'underline',
     fontSize: 14,
+    textDecorationLine: 'underline',
+  },
+  linkIcon: {
+    marginLeft: 4,
   },
 });

@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { db, auth } from '../lib/firebase';
 import { useAppNavigation } from '../hooks/useAppNavigation';
 import { setDoc, doc } from 'firebase/firestore';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
@@ -55,41 +57,66 @@ export default function RegisterScreen() {
       <View style={styles.form}>
         <Text style={styles.titulo}>Criar conta</Text>
 
-        <TextInput
-          placeholder="Nome"
-          placeholderTextColor="#888"
-          style={styles.input}
-          value={nome}
-          onChangeText={setNome}
-        />
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="person"
+            size={20}
+            color="#9ca3af"
+            style={styles.icon}
+          />
+          <TextInput
+            placeholder="Nome"
+            placeholderTextColor="#9ca3af"
+            style={styles.input}
+            value={nome}
+            onChangeText={setNome}
+          />
+        </View>
 
-        <TextInput
-          placeholder="E-mail"
-          placeholderTextColor="#888"
-          style={styles.input}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="email"
+            size={20}
+            color="#9ca3af"
+            style={styles.icon}
+          />
+          <TextInput
+            placeholder="E-mail"
+            placeholderTextColor="#9ca3af"
+            style={styles.input}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
 
-        <TextInput
-          placeholder="Senha"
-          placeholderTextColor="#888"
-          style={styles.input}
-          secureTextEntry
-          value={senha}
-          onChangeText={setSenha}
-        />
+        <View style={styles.inputContainer}>
+          <MaterialIcons
+            name="lock"
+            size={20}
+            color="#9ca3af"
+            style={styles.icon}
+          />
+          <TextInput
+            placeholder="Senha"
+            placeholderTextColor="#9ca3af"
+            style={styles.input}
+            secureTextEntry
+            value={senha}
+            onChangeText={setSenha}
+          />
+        </View>
 
         <TouchableOpacity
           style={[styles.botao, carregando && styles.botaoDesabilitado]}
           onPress={handleCadastro}
           disabled={carregando}
         >
-          <Text style={styles.botaoTexto}>
-            {carregando ? 'Cadastrando...' : 'Cadastrar'}
-          </Text>
+          <View style={styles.botaoContent}>
+            <Text style={styles.botaoTexto}>Cadastrar</Text>
+            {carregando && <ActivityIndicator size="small" color="#fff" />}
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -119,43 +146,66 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    gap: 16,
   },
   titulo: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 24,
+    marginBottom: 8,
     color: '#111827',
     textAlign: 'center',
   },
-  input: {
-    backgroundColor: '#fff',
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderColor: '#d1d5db',
     borderWidth: 1,
     borderRadius: 6,
-    padding: 12,
-    marginBottom: 16,
+    paddingHorizontal: 12,
+    backgroundColor: '#fff',
+  },
+  icon: {
+    marginRight: 8,
+  },
+  input: {
+    flex: 1,
+    height: 48,
     color: '#111827',
+    fontSize: 16,
   },
   botao: {
     backgroundColor: '#1a1a1a',
     borderRadius: 8,
     paddingVertical: 12,
-    paddingHorizontal: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 16,
+    marginTop: 8,
   },
   botaoDesabilitado: {
-    opacity: 0.7,
+    opacity: 0.5,
+  },
+  botaoContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   botaoTexto: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  linkContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   link: {
-    color: '#2563eb',
+    color: '#646cff',
     textAlign: 'center',
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  linkIcon: {
+    marginLeft: 4,
   },
 });
