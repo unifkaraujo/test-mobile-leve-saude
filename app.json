@@ -16,6 +16,7 @@
       "supportsTablet": true
     },
     "android": {
+      "appName": "Leve Saúde",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
