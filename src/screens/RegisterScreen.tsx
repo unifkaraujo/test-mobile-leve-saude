@@ -46,7 +46,27 @@ export default function RegisterScreen() {
 
       navigation.navigate('Home');
     } catch (error: any) {
-      Alert.alert('Erro ao cadastrar', error.message);
+      console.error('Erro no cadastro:', error);
+      let mensagem = 'Erro ao cadastrar';
+
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          mensagem = 'Este e-mail já está em uso.';
+          break;
+        case 'auth/invalid-email':
+          mensagem = 'E-mail inválido.';
+          break;
+        case 'auth/weak-password':
+          mensagem = 'Senha muito fraca. Use pelo menos 6 caracteres.';
+          break;
+        case 'auth/network-request-failed':
+          mensagem = 'Erro de conexão. Verifique sua internet.';
+          break;
+        default:
+          mensagem = `Erro desconhecido: ${error.code}`;
+      }
+
+      Alert.alert('Erro ao cadastrar', mensagem);
     } finally {
       setCarregando(false);
     }

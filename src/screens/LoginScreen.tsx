@@ -25,9 +25,29 @@ export default function LoginScreen() {
     try {
       await signInWithEmailAndPassword(auth, email, senha);
       navigation.navigate('Home');
-      setLoading(false);
     } catch (error: any) {
-      Alert.alert('Erro ao entrar', error.message);
+      console.error('Erro no login:', error);
+      let mensagem = 'Erro ao fazer login';
+
+      switch (error.code) {
+        case 'auth/invalid-email':
+          mensagem = 'E-mail inválido';
+          break;
+        case 'auth/invalid-credential':
+          mensagem = 'E-mail ou senha incorretos';
+          break;
+        case 'auth/too-many-requests':
+          mensagem = 'Muitas tentativas. Tente novamente mais tarde.';
+          break;
+        case 'auth/network-request-failed':
+          mensagem = 'Erro de conexão. Verifique sua internet.';
+          break;
+        default:
+          mensagem = `Erro desconhecido: ${error.code}`;
+      }
+
+      Alert.alert('Erro ao entrar', mensagem);
+    } finally {
       setLoading(false);
     }
   };
